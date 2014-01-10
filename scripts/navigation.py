@@ -29,7 +29,7 @@ def create_nav_goal(x, y, yaw):
     mb_goal.target_pose.header.frame_id = '/map' # Note: the frame_id must be map
     mb_goal.target_pose.pose.position.x = 1.0
     mb_goal.target_pose.pose.position.y = 1.0
-    mb_goal.target_pose.pose.position.z = 0.0 # z is actually ignored
+    mb_goal.target_pose.pose.position.z = 0.0 # z must be 0.0 (no height in the map)
     
     # Orientation of the robot is expressed in the yaw value of euler angles
     angle = radians(yaw) # angles are expressed in radians
