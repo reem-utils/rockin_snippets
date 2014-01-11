@@ -8,8 +8,7 @@ Created on Jan 11 16:32:00 2014
 Snippet of code on how to send a moveit goal to an arm
 
 Navigation actionserver: /move_group/goal
-Type of message:
-
+Type of message: moveit_msgs/MoveGroupGoal
 
 """
 
@@ -46,7 +45,7 @@ def create_move_group_pose_goal(goal_pose=Pose(), group="right_arm_torso", end_l
     position_c.header = header
     if end_link_name != None:
         position_c.link_name = end_link_name
-    position_c.constraint_region.primitives.append(SolidPrimitive(type=SolidPrimitive.SPHERE, dimensions=[0.01]))
+    position_c.constraint_region.primitives.append(SolidPrimitive(type=SolidPrimitive.SPHERE, dimensions=[0.01])) # how big is the area where the end effector can be
     position_c.constraint_region.primitive_poses.append(goal_pose)
     position_c.weight = 1.0
     goal_c.position_constraints.append(position_c)

@@ -12,4 +12,4 @@ Getting current robot position in map (navigation.py)
 
 Sending a navigation goal (navigation.py)
 
-
+Sending a moveit goal (moveit.py)
