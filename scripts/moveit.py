@@ -5,10 +5,22 @@ Created on Jan 11 16:32:00 2014
 
 @author: Sam Pfeiffer
 
-Snippet of code on how to send a moveit goal to an arm
+Snippet of code on how to send a MoveIt! move_group goal to an arm
 
-Navigation actionserver: /move_group/goal
+Moveit actionserver: /move_group/goal
 Type of message: moveit_msgs/MoveGroupGoal
+
+Groups of REEM and their end effectors:
+
+right_arm -> arm_right_tool_link
+right_arm_torso -> arm_right_tool_link
+right_arm_torso_grasping -> hand_right_grasping_frame
+
+left_arm -> arm_left_tool_link
+left_arm_torso -> arm_left_tool_link
+left_arm_torso_grasping -> hand_left_grasping_frame
+
+Other groups: both_arms, head, right_hand, left_hand
 
 """
 
