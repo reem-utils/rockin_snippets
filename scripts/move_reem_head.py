@@ -51,6 +51,7 @@ from sensor_msgs.msg import JointState
 from control_msgs.msg import FollowJointTrajectoryGoal, FollowJointTrajectoryAction, FollowJointTrajectoryResult
 from trajectory_msgs.msg import JointTrajectoryPoint
 
+# Useful dictionary for reading in an human friendly way errors
 traj_error_dict = {}
 for name in FollowJointTrajectoryResult.__dict__.keys():
     if not name[:1] == '_':
