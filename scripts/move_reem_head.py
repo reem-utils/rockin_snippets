@@ -78,11 +78,15 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         rospy.loginfo("Will move head down.")
         goal = createHeadGoal(0.0, 1.0)
-    if len(sys.argv) > 1:
+    elif len(sys.argv) == 3:
         head_1_joint = float(sys.argv[1])
         head_2_joint = float(sys.argv[2])
         goal = createHeadGoal(head_1_joint, head_2_joint)
         rospy.loginfo("Will move head to poses: " + str(head_1_joint) + " " + str(head_2_joint))
+    else:
+        rospy.loginfo("Incorrect number of parameters, usage:")
+        rospy.loginfo("move_reem_head.py <head_1_joint> <head_2_joint>")
+        exit(0)
     head_as = actionlib.SimpleActionClient('/head_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
     rospy.loginfo("Connecting to head AS...")
     head_as.wait_for_server(rospy.Duration(10))

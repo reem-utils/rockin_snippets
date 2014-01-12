@@ -117,6 +117,7 @@ if __name__ == '__main__':
     else:
         rospy.loginfo("Incorrect number of parameters, usage:")
         rospy.loginfo("move_reem_hands.py <right/left> <thumb_joint> <middle_joint> <index_joint> ")
+        exit(0)
     hand_as = actionlib.SimpleActionClient('/' + side + '_hand_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
     rospy.loginfo("Connecting to " + side + " hand AS...")
     hand_as.wait_for_server(rospy.Duration(10))
