@@ -84,7 +84,13 @@ for name in FollowJointTrajectoryResult.__dict__.keys():
         traj_error_dict[code] = name
 
 def createHandGoal(side, j1, j2, j3):
-    """Creates a FollowJointTrajectoryGoal with the values specified in j1 and j2 for the joint positions"""
+    """Creates a FollowJointTrajectoryGoal with the values specified in j1, j2 and j3 for the joint positions
+    with the hand specified in side
+    @arg side string 'right' or 'left'
+    @arg j1 float value for joint 'hand_'+side+'_thumb_joint'
+    @arg j2 float value for joint 'hand_'+side+'_middle_joint'
+    @arg j3 float value for joint 'hand_'+side+'_index_joint'
+    @return FollowJointTrajectoryGoal with the specified goal"""
     fjtg = FollowJointTrajectoryGoal()
     fjtg.trajectory.joint_names.append('hand_'+side+'_thumb_joint')
     fjtg.trajectory.joint_names.append('hand_'+side+'_middle_joint')

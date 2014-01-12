@@ -59,7 +59,10 @@ for name in FollowJointTrajectoryResult.__dict__.keys():
         traj_error_dict[code] = name
 
 def createHeadGoal(j1, j2):
-    """Creates a FollowJointTrajectoryGoal with the values specified in j1 and j2 for the joint positions"""
+    """Creates a FollowJointTrajectoryGoal with the values specified in j1 and j2 for the joint positions
+    @arg j1 float value for head_1_joint
+    @arg j2 float value for head_2_joint
+    @returns FollowJointTrajectoryGoal with the specified goal"""
     fjtg = FollowJointTrajectoryGoal()
     fjtg.trajectory.joint_names.append('head_1_joint')
     fjtg.trajectory.joint_names.append('head_2_joint')
