@@ -118,7 +118,9 @@ class jointStateGrabber():
 
 def usage(program_name):
     print "Usage:"
-    print program_name + "     (without arguments)"
+    print program_name
+    print "Print all joint names and it's values"
+    print program_name + " -i"
     print "Interactive mode, write a group name and it will be printed"
     print program_name + " <group>"
     print "Will print the group joint names and its joint values"
@@ -130,7 +132,12 @@ if __name__ == '__main__':
         print "Error, too many arguments"
         usage(sys.argv[0])
         exit()
-    elif
+    elif len(sys.argv) == 1:
+        if sys.argv[1] != "-i":
+            group_to_print = sys.argv[1]
+        else:
+            print "Interactive mode! write a group name and it will be printed"
+            #TODO: code it
 
     node = jointStateGrabber()
-    node.printNamesAndValues("right_arm_torso")
+    node.printNamesAndValues(group_to_print)
