@@ -204,12 +204,14 @@ if __name__ == '__main__':
             usage(sys.argv[0])
             exit(0)
         elif sys.argv[1] == "-i":
-            print "Interactive mode! Write a group name (or short group name) and it's values will be printed."
+            print "Interactive mode! Write a group name (or short group name) and it's values will be printed. (Write exit to exit)."
             print groups
             print shortnamegroups
             while True:
                 input = raw_input("> ")
                 group_to_print = getGroupNameIfExists(input)
+                if input == "exit":
+                    exit(0)
                 if group_to_print == None:
                     print "Not a valid group name!"
                     print "Short names: " + str(shortnamegroups)
