@@ -14,6 +14,10 @@ from sensor_msgs.msg import JointState
 from control_msgs.msg import FollowJointTrajectoryGoal
 from trajectory_msgs.msg import JointTrajectoryPoint
 
+groups = ["all_joints", "left_arm", "right_arm", "left_arm_torso", "right_arm_torso", "torso", "head", "right_hand", "left_hand", "right_hand_all", "left_hand_all"]
+shortnamegroups = ["a", "la", "ra", "lat", "rat", "t", "h", "rh", "lh", "rha", "lha"]
+
+
 class jointStateGrabber():
     """This class subscribes to the /joint_states topic of REEM
     and you can ask it for the current status of a group and get it 
@@ -68,7 +72,7 @@ class jointStateGrabber():
         # getting first message to correctly find joints
         while self.current_joint_states == None:
             rospy.sleep(0.1)
-        rospy.loginfo("Node initialized. Ready to grab joint states")
+        rospy.loginfo("Node initialized. Ready to grab joint states.")
         
 
     def getJointStates(self, data):
@@ -90,10 +94,10 @@ class jointStateGrabber():
         return fjtg
         
         
-        
     def getNamesAndMsgList(self, group='right_arm_torso'):
         """ Get the joints for the specified group and return this name list and a list of it's values in joint_states
         Note: the names and values are correlated in position """
+        
         list_to_iterate = getattr(self, group)        
         curr_j_s = self.current_joint_states
         ids_list = []
@@ -109,35 +113,105 @@ class jointStateGrabber():
         return list_to_iterate, msg_list
 
     def printNamesAndValues(self, group='right_arm_torso'):
+        """Given a group, print in screen in a pretty way joint names and it's values"""
         names, values = self.getNamesAndMsgList(group=group)
         print "Name, Joint Value"
         print "================="
         for nam, val in zip(names, values):
-            print nam + " " + str(val) 
-        
+            print nam + " " + str(val)
+            
+    def printOnlyValues(self, group):
+        names, values = self.getNamesAndMsgList(group=group)
+        print group + " contains " + str(names)
+        print "With values:"
+        for val in values:
+            print str(val), 
+
 
 def usage(program_name):
+    """ print usage """
     print "Usage:"
     print program_name
-    print "Print all joint names and it's values"
+    print "Print all joint names and it's values.\n"
     print program_name + " -i"
-    print "Interactive mode, write a group name and it will be printed"
+    print "Interactive mode, write a group name and it will be printed.\n"
     print program_name + " <group>"
-    print "Will print the group joint names and its joint values"
-    print "Available groups are: all_joints, "
+    print "Will print the group joint names and its joint values."
+    print "Available groups are: " + str(groups)
+    print "Or their shortname version: " + str(shortnamegroups)
+
+def shortToLargeName(shortname):
+    """ Translate shortname of group to long name of group"""
+    try:
+        longname = groups[shortnamegroups.index(shortname)]
+    except ValueError:
+        print "\"" + shortname + "\" not a valid short name."
+        print "Valid short names:"
+        print shortnamegroups
+        exit(0)
+    return longname
+
+def isGroupName(supposed_group_name):
+    """ Check if a given group string is a group or shortname for a group"""
+    if isShortGroupName(supposed_group_name):
+        return True
+    elif not isLongGroupName(supposed_group_name):
+        return False
+    return True
+
+def isShortGroupName(group_name):
+    """Check if a given group is a shortname for a group"""
+    try:
+        idx = shortnamegroups.index(group_name)
+    except ValueError:
+        return False
+    return True
+
+def isLongGroupName(group_name):
+    """Check if a given group is a name for a group"""
+    try:
+        idx = groups.index(group_name)
+    except ValueError:
+        return False
+    return True
+
+def getGroupNameIfExists(group_name):
+    """Returns the group name if it exists None otherwise"""
+    if isGroupName(group_name): # if a valid name is given for a group, print that group
+        if isShortGroupName(group_name):
+            return shortToLargeName(group_name)
+        else:
+            return group_name
+    else:
+        return None
+    
 
 if __name__ == '__main__':
     rospy.init_node('joint_state_grabber')
-    if len(sys.argv) > 2:
+    node = jointStateGrabber()
+    if len(sys.argv) > 3:
         print "Error, too many arguments"
         usage(sys.argv[0])
         exit()
-    elif len(sys.argv) == 1:
-        if sys.argv[1] != "-i":
-            group_to_print = sys.argv[1]
-        else:
-            print "Interactive mode! write a group name and it will be printed"
-            #TODO: code it
-
-    node = jointStateGrabber()
+    elif len(sys.argv) == 1: # default to print all joints
+        group_to_print = "all_joints"
+    elif len(sys.argv) == 2: # different options...
+        group_to_print = getGroupNameIfExists(sys.argv[1])
+        if group_to_print == None and sys.argv[1] != "-i":
+            print "Not a valid group name."
+            usage(sys.argv[0])
+            exit(0)
+        elif sys.argv[1] == "-i":
+            print "Interactive mode! Write a group name (or short group name) and it's values will be printed."
+            print groups
+            print shortnamegroups
+            while True:
+                input = raw_input("> ")
+                group_to_print = getGroupNameIfExists(input)
+                if group_to_print == None:
+                    print "Not a valid group name!"
+                    print "Short names: " + str(shortnamegroups)
+                else:
+                    node.printNamesAndValues(group_to_print)
+              
     node.printNamesAndValues(group_to_print)
