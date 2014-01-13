@@ -5,7 +5,9 @@ Created on Jan 13 19:06:55 2014
 
 @author: Sam Pfeiffer
 
-Subscribe to joint states and get the joint positions for a group printed
+Subscribe to joint states and get the joint positions for a group printed nicely in screen or
+import from this file to get joint names and values of a group using getNamesAndMsgList
+for any tool you need
 """
 import sys
 
