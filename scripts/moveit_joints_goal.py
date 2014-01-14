@@ -10,17 +10,32 @@ Snippet of code on how to send a MoveIt! move_group goal to an arm in joint spac
 Moveit actionserver: /move_group/goal
 Type of message: moveit_msgs/MoveGroupGoal
 
-Groups of REEM and their end effectors:
+Groups of REEM and their joints:
 
-right_arm -> arm_right_tool_link
-right_arm_torso -> arm_right_tool_link
-right_arm_torso_grasping -> hand_right_grasping_frame
+right_arm = ['arm_right_1_joint', 'arm_right_2_joint', 'arm_right_3_joint',
+              'arm_right_4_joint', 'arm_right_5_joint', 'arm_right_6_joint',
+              'arm_right_7_joint']
+right_arm_torso = ['torso_1_joint', 'torso_2_joint',
+                   'arm_right_1_joint', 'arm_right_2_joint', 'arm_right_3_joint',
+                   'arm_right_4_joint', 'arm_right_5_joint', 'arm_right_6_joint',
+                   'arm_right_7_joint']
+right_arm_torso_grasping = same as right_arm_torso
 
-left_arm -> arm_left_tool_link
-left_arm_torso -> arm_left_tool_link
-left_arm_torso_grasping -> hand_left_grasping_frame
+left_arm = ['arm_left_1_joint', 'arm_left_2_joint', 'arm_left_3_joint',
+           'arm_left_4_joint', 'arm_left_5_joint', 'arm_left_6_joint',
+           'arm_left_7_joint']
+left_arm_torso = ['torso_1_joint', 'torso_2_joint',
+                   'arm_left_1_joint', 'arm_left_2_joint', 'arm_left_3_joint',
+                   'arm_left_4_joint', 'arm_left_5_joint', 'arm_left_6_joint',
+                   'arm_left_7_joint']
+left_arm_torso_grasping = same as left_arm_torso
 
-Other groups: both_arms, head, right_hand, left_hand
+Other groups: 
+head = ['head_1_joint', 'head_2_joint']
+both_arms = right_arm_torso + left_arm
+both_arms_and_head = right_arm_torso + left_arm + head
+right_hand = ['hand_right_index_joint', 'hand_right_middle_joint', 'hand_right_thumb_joint']
+left_hand = ['hand_left_index_joint', 'hand_left_middle_joint', 'hand_left_thumb_joint']
 
 """
 
@@ -101,7 +116,7 @@ if __name__=='__main__':
     rospy.loginfo("Sending goal...")
     moveit_ac.send_goal(moveit_goal)
     rospy.loginfo("Waiting for result...")
-    moveit_ac.wait_for_result(rospy.Duration(5.0))
+    moveit_ac.wait_for_result(rospy.Duration(10.0))
     moveit_result = moveit_ac.get_result()
     
     #rospy.loginfo("Got result:\n" + str(moveit_result)) # Uncomment if you want to see the full result message
@@ -110,4 +125,6 @@ if __name__=='__main__':
         rospy.logwarn("Goal not succeeded: \"" + moveit_error_dict[moveit_result.error_code.val]  + "\"")
     elif moveit_result != None:
         rospy.loginfo("Goal achieved.")
+    else:
+        rospy.logerr("Couldn't get result, something went wrong.")
     
