@@ -76,7 +76,7 @@ def create_move_group_pose_goal(goal_pose=Pose(), group="right_arm_torso", end_l
     orientation_c.weight = 1.0
     goal_c.orientation_constraints.append(orientation_c)
     moveit_goal.request.goal_constraints.append(goal_c)
-    moveit_goal.request.num_planning_attempts = 3 # The number of times this plan is to be computed. Shortest solution will be reported.
+    moveit_goal.request.num_planning_attempts = 5 # The number of times this plan is to be computed. Shortest solution will be reported.
     moveit_goal.request.allowed_planning_time = 5.0
     moveit_goal.planning_options.plan_only = plan_only
     moveit_goal.planning_options.planning_scene_diff.is_diff = True # Necessary
@@ -107,7 +107,7 @@ if __name__=='__main__':
     rospy.loginfo("Sending goal...")
     moveit_ac.send_goal(moveit_goal)
     rospy.loginfo("Waiting for result...")
-    moveit_ac.wait_for_result(rospy.Duration(5.0))
+    moveit_ac.wait_for_result(rospy.Duration(10.0))
     moveit_result = moveit_ac.get_result()
     
     #rospy.loginfo("Got result:\n" + str(moveit_result)) # Uncomment if you want to see the full result message
@@ -116,4 +116,7 @@ if __name__=='__main__':
         rospy.logwarn("Goal not succeeded: \"" + moveit_error_dict[moveit_result.error_code.val]  + "\"")
     elif moveit_result != None:
         rospy.loginfo("Goal achieved.")
+    else:
+        rospy.logerr("Couldn't get result, something went wrong, the goal probably timed out.")
+    
     
