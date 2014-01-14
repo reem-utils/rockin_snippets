@@ -79,7 +79,7 @@ def create_move_group_joints_goal(joint_names, joint_values, group="right_arm_to
         goal_c.joint_constraints.append(joint_c)
 
     moveit_goal.request.goal_constraints.append(goal_c)
-    moveit_goal.request.num_planning_attempts = 3
+    moveit_goal.request.num_planning_attempts = 5
     moveit_goal.request.allowed_planning_time = 5.0
     moveit_goal.planning_options.plan_only = plan_only
     moveit_goal.planning_options.planning_scene_diff.is_diff = True
@@ -126,5 +126,5 @@ if __name__=='__main__':
     elif moveit_result != None:
         rospy.loginfo("Goal achieved.")
     else:
-        rospy.logerr("Couldn't get result, something went wrong.")
+        rospy.logerr("Couldn't get result, something went wrong, the goal probably timed out.")
     
