@@ -124,10 +124,14 @@ class jointStateGrabber():
             
     def printOnlyValues(self, group):
         names, values = self.getNamesAndMsgList(group=group)
-        print group + " contains " + str(names)
+        print group + " = " + str(names)
         print "With values:"
+        print "[ ",
         for val in values:
-            print str(val)+",", 
+            if val == values[-1]: # if it's the last one dont put comma and add an enter
+                print str(val) + " ]"
+            else:
+                print str(val)+",", 
 
 
 def usage(program_name):
@@ -217,5 +221,6 @@ if __name__ == '__main__':
                     print "Short names: " + str(shortnamegroups)
                 else:
                     node.printNamesAndValues(group_to_print)
+                    node.printOnlyValues(group_to_print)
               
     node.printNamesAndValues(group_to_print)
