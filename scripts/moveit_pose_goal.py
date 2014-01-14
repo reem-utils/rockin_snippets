@@ -96,8 +96,8 @@ if __name__=='__main__':
     rospy.loginfo("Creating goal.")
     # Set the position of the tool link, referenced to base_link
     # X = positive in front of the robot, Y = positive to the left of the robot, Z = positive going up
-    goal_point = Point(0.2, -0.2, 1.2) # right_arm arm_right_tool_link can definitely get here
     goal_pose = Pose()
+    goal_point = Point(0.2, -0.2, 1.2) # right_arm arm_right_tool_link can definitely get here
     goal_pose.position = goal_point
     # Set the rotation of the tool link, all 0 means for the right hand palm looking left straight
     # roll = rotation over X, pitch = rotation over Y, yaw = rotation over Z
