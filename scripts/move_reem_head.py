@@ -9,6 +9,7 @@ Send goals to the motors of the head.
 
 Usage:
 move_reem_head.py <head_1_joint> <head_2_joint>
+           pan (+ left - right)  tilt (+ down - up)
 or (without parameters)
 move_reem_head.py
 Which will move the head down.
@@ -71,7 +72,7 @@ def createHeadGoal(j1, j2):
     point.positions.append(j2)
     point.velocities.append(0.0)
     point.velocities.append(0.0)
-    point.time_from_start = rospy.Duration(2.0)
+    point.time_from_start = rospy.Duration(4.0)
     fjtg.trajectory.points.append(point)
     fjtg.trajectory.header.stamp = rospy.Time.now()
     return fjtg
@@ -89,6 +90,7 @@ if __name__ == '__main__':
     else:
         rospy.loginfo("Incorrect number of parameters, usage:")
         rospy.loginfo("move_reem_head.py <head_1_joint> <head_2_joint>")
+        rospy.loginfo("           pan (+ left - right)  tilt (+ down - up)")
         exit(0)
     head_as = actionlib.SimpleActionClient('/head_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
     rospy.loginfo("Connecting to head AS...")
