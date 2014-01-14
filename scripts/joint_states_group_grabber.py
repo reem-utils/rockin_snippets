@@ -117,15 +117,14 @@ class jointStateGrabber():
     def printNamesAndValues(self, group='right_arm_torso'):
         """Given a group, print in screen in a pretty way joint names and it's values"""
         names, values = self.getNamesAndMsgList(group=group)
-        print "Name, Joint Value"
+        print "Name =  Joint Value"
         print "================="
         for nam, val in zip(names, values):
-            print nam + " " + str(val)
+            print nam + " = " + str(val)
             
     def printOnlyValues(self, group):
         names, values = self.getNamesAndMsgList(group=group)
         print group + " = " + str(names)
-        print "With values:"
         print "[ ",
         for val in values:
             if val == values[-1]: # if it's the last one dont put comma and add an enter
