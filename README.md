@@ -12,7 +12,7 @@ Getting current robot position in map (navigation.py)
 
 Sending a navigation goal (navigation.py)
 
-Sending a moveit goal (moveit.py)
+Sending a moveit pose goal (moveit_pose_goal.py)
 
 Moving REEM's head (move_reem_head.py)
 
