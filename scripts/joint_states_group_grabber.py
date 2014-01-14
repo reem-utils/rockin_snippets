@@ -127,7 +127,7 @@ class jointStateGrabber():
         print group + " contains " + str(names)
         print "With values:"
         for val in values:
-            print str(val), 
+            print str(val)+",", 
 
 
 def usage(program_name):
