@@ -39,7 +39,7 @@ def create_nav_goal(x, y, yaw):
     return mb_goal
 
 def callback_pose(data):
-    """Callback for the topic susbscriber.
+    """Callback for the topic subscriber.
        Prints the current received data on the topic."""
     x = data.pose.pose.position.x
     y = data.pose.pose.position.y
