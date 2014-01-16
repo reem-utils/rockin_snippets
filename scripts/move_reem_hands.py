@@ -130,9 +130,9 @@ if __name__ == '__main__':
     rospy.loginfo("Connected, sending goal.")
     hand_as.send_goal(goal)
     rospy.loginfo("Goal sent, waiting...")
-    hand_as.wait_for_result(rospy.Duration(10))
-    #hand_as = hand_as.get_result()
-    #rospy.loginfo("Done with result: " + traj_error_dict[head_result.error_code.val])
+    hand_as.wait_for_result(rospy.Duration(15))
+    hand_result = hand_as.get_result()
+    rospy.loginfo("Done with result: " + traj_error_dict[hand_result.error_code.val])
 
 
     
