@@ -102,7 +102,7 @@ def createHandGoal(side, j1, j2, j3):
     point.velocities.append(0.0)
     point.velocities.append(0.0)
     point.velocities.append(0.0)
-    point.time_from_start = rospy.Duration(2.0)
+    point.time_from_start = rospy.Duration(3.0)
     fjtg.trajectory.points.append(point)
     fjtg.trajectory.header.stamp = rospy.Time.now()
     return fjtg
@@ -127,6 +127,7 @@ if __name__ == '__main__':
     hand_as = actionlib.SimpleActionClient('/' + side + '_hand_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
     rospy.loginfo("Connecting to " + side + " hand AS...")
     hand_as.wait_for_server(rospy.Duration(10))
+    rospy.sleep(1.0)
     rospy.loginfo("Connected, sending goal.")
     hand_as.send_goal(goal)
     rospy.loginfo("Goal sent, waiting...")
