@@ -11,7 +11,7 @@ Usage:
 move_reem_hands.py <right/left> <thumb_joint> <middle_joint> <index_joint> 
 or (without parameters)
 move_reem_hands.py
-Which will open the right hand (like move_reem_hands.py right 0.0 0.0 0.0 )
+Which will open the right hand (like move_reem_hands.py right 0.1 0.1 0.1 )
 
 Also:
 
@@ -73,7 +73,7 @@ import rospy
 
 
 from sensor_msgs.msg import JointState
-from control_msgs.msg import FollowJointTrajectoryGoal, FollowJointTrajectoryAction, FollowJointTrajectoryResult
+from control_msgs.msg import FollowJointTrajectoryGoal, FollowJointTrajectoryAction, FollowJointTrajectoryResult, JointTolerance
 from trajectory_msgs.msg import JointTrajectoryPoint
 
 # Useful dictionary for reading in an human friendly way errors
@@ -102,8 +102,16 @@ def createHandGoal(side, j1, j2, j3):
     point.velocities.append(0.0)
     point.velocities.append(0.0)
     point.velocities.append(0.0)
-    point.time_from_start = rospy.Duration(3.0)
+    point.time_from_start = rospy.Duration(4.0)
     fjtg.trajectory.points.append(point)
+    for joint in fjtg.trajectory.joint_names: # Specifying high tolerances for the hand as they are slow compared to other hardware
+        goal_tol = JointTolerance()
+        goal_tol.name = joint
+        goal_tol.position = 5.0
+        goal_tol.velocity = 5.0
+        goal_tol.acceleration = 5.0
+        fjtg.goal_tolerance.append(goal_tol)
+    fjtg.goal_time_tolerance = rospy.Duration(3)
     fjtg.trajectory.header.stamp = rospy.Time.now()
     return fjtg
 
@@ -112,7 +120,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         rospy.loginfo("Will open right hand.")
         side = "right"
-        goal = createHandGoal(side, 0.0, 0.0, 0.0)
+        goal = createHandGoal(side, 0.1, 0.1, 0.1)
     elif len(sys.argv) == 5:
         side = sys.argv[1]
         thumb_joint = float(sys.argv[2])
