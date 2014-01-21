@@ -1,0 +1,10 @@
+- git: {local-name: object_recognition_tabletop, uri: 'https://github.com/bmagyar/tabletop', version: 'publish_cluster'}
+- git: {local-name: object_recognition_ros, uri: 'https://github.com/bmagyar/object_recognition_ros', version: 'publish_cluster'}
+- git: {local-name: common_msgs, uri: 'https://github.com/bmagyar/common_msgs', version: 'sensor_msgs_read_points_catkin_fix'}
+
+
+- git: {local-name: object_recognition_clusters, uri: 'https://github.com/bmagyar/object_recognition_clusters'}
+- git: {local-name: reem_object_recognition, uri: 'https://github.com/bmagyar/reem_object_recognition'}
+- git: {local-name: block_grasp_generator, uri: 'https://github.com/bmagyar/block_grasp_generator', version: 'hydro-devel'}
+
+
