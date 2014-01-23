@@ -6,5 +6,6 @@
 - git: {local-name: object_recognition_clusters, uri: 'https://github.com/bmagyar/object_recognition_clusters'}
 - git: {local-name: reem_object_recognition, uri: 'https://github.com/bmagyar/reem_object_recognition'}
 - git: {local-name: block_grasp_generator, uri: 'https://github.com/bmagyar/block_grasp_generator', version: 'hydro-devel'}
+- git: {local-name: reem_tabletop_grasping, uri: 'https://github.com/bmagyar/reem_tabletop_grasping'}
 
 
