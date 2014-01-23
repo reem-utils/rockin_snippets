@@ -41,6 +41,7 @@ Install REEM SIMULATION
 cd ~/catkin_ws/src
 wstool init .
 wstool merge https://raw2.github.com/pal-robotics/pal-ros-pkg/master/reem-sim-hydro.rosinstall
+wstool merge https://raw.github.com/reem-utils/rockin_snippets/master/reem-perception-grasping.rosinstall
 wstool up
 cd ..
 rosdep install --from-paths src --ignore-src --rosdistro hydro -y
