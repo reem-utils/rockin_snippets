@@ -41,7 +41,6 @@ Install REEM SIMULATION
 cd ~/catkin_ws/src
 wstool init .
 wstool merge https://raw2.github.com/pal-robotics/pal-ros-pkg/master/reem-sim-hydro.rosinstall
-wstool merge https://raw.github.com/reem-utils/rockin_snippets/master/reem-perception-grasping.rosinstall
 wstool up
 cd ..
 rosdep install --from-paths src --ignore-src --rosdistro hydro -y
@@ -50,4 +49,8 @@ source devel/setup.sh
 export USE_RGBD_SENSOR=true
 
 This last variable is to enable the RGBD sensor (Asus Xtion) over the head of REEM.
+
+If you need object detection/grasping stuff:
+(Do it only if you know why you do it)
+wstool merge https://raw.github.com/reem-utils/rockin_snippets/master/reem-perception-grasping.rosinstall
 
