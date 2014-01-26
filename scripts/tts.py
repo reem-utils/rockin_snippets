@@ -25,8 +25,9 @@ wait_before_speaking:
 
 import actionlib
 import rospy
+import sys
 
-from text_to_speech.msg import Sound, SoundGoal
+from pal_interaction_msgs.msg import SoundAction, SoundGoal
 
 
 def createTTSGoal(text, lang_id='', wait_before_speaking=rospy.Duration(0.0)):
@@ -41,11 +42,13 @@ def createTTSGoal(text, lang_id='', wait_before_speaking=rospy.Duration(0.0)):
 
 if __name__ == '__main__':
     rospy.init_node('make_reem_say')
-
-    tts_as = actionlib.SimpleActionClient('/sound', Sound)
+    if len(sys.argv) == 2:
+        goal = createTTSGoal(sys.argv[1])
+    else:
+        goal = createTTSGoal("Rockin camp is here!")
+    tts_as = actionlib.SimpleActionClient('/sound', SoundAction)
     rospy.loginfo("Connecting to TTS AS...")
     tts_as.wait_for_server(rospy.Duration(10))
-    goal = createTTSGoal("Rockin camp is here!")
     rospy.loginfo("Connected, sending goal.")
     tts_as.send_goal(goal)
     rospy.loginfo("Goal sent, waiting...")
