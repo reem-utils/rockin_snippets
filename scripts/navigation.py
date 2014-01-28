@@ -27,8 +27,8 @@ def create_nav_goal(x, y, yaw):
     Returns a MoveBaseGoal"""
     mb_goal = MoveBaseGoal()
     mb_goal.target_pose.header.frame_id = '/map' # Note: the frame_id must be map
-    mb_goal.target_pose.pose.position.x = 1.0
-    mb_goal.target_pose.pose.position.y = 1.0
+    mb_goal.target_pose.pose.position.x = x
+    mb_goal.target_pose.pose.position.y = y
     mb_goal.target_pose.pose.position.z = 0.0 # z must be 0.0 (no height in the map)
     
     # Orientation of the robot is expressed in the yaw value of euler angles
@@ -62,11 +62,12 @@ if __name__=='__main__':
     rospy.loginfo("Connected.")
     
     rospy.loginfo("Creating navigation goal...")
-    nav_goal = create_nav_goal(2.0, 2.0, 90)
+    nav_goal = create_nav_goal(4.72333594438, -0.377168390489, 45) # 3.925197124481201, -3.026911973953247, 0.6259599924087524 livingroom
     rospy.loginfo("Sending goal to x=2.0 y=2.0 yaw=90...")
     nav_as.send_goal(nav_goal)
     rospy.loginfo("Waiting for result...")
     nav_as.wait_for_result()
+    nav_res = nav_as.get_result()
     rospy.loginfo("Done!")
 
     
