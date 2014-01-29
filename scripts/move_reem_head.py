@@ -49,7 +49,7 @@ import rospy
 
 
 from sensor_msgs.msg import JointState
-from control_msgs.msg import FollowJointTrajectoryGoal, FollowJointTrajectoryAction, FollowJointTrajectoryResult
+from control_msgs.msg import FollowJointTrajectoryGoal, FollowJointTrajectoryAction, FollowJointTrajectoryResult, JointTolerance
 from trajectory_msgs.msg import JointTrajectoryPoint
 
 # Useful dictionary for reading in an human friendly way errors
@@ -73,6 +73,15 @@ def createHeadGoal(j1, j2):
     point.velocities.append(0.0)
     point.velocities.append(0.0)
     point.time_from_start = rospy.Duration(4.0)
+    for joint in fjtg.trajectory.joint_names: # Specifying high tolerances for the hand as they are slow compared to other hardware
+        goal_tol = JointTolerance()
+        goal_tol.name = joint
+        goal_tol.position = 5.0
+        goal_tol.velocity = 5.0
+        goal_tol.acceleration = 5.0
+        fjtg.goal_tolerance.append(goal_tol)
+    fjtg.goal_time_tolerance = rospy.Duration(3)
+    
     fjtg.trajectory.points.append(point)
     fjtg.trajectory.header.stamp = rospy.Time.now()
     return fjtg
@@ -94,11 +103,12 @@ if __name__ == '__main__':
         exit(0)
     head_as = actionlib.SimpleActionClient('/head_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
     rospy.loginfo("Connecting to head AS...")
-    head_as.wait_for_server(rospy.Duration(10))
+    head_as.wait_for_server()
+    rospy.sleep(1.0)
     rospy.loginfo("Connected, sending goal.")
     head_as.send_goal(goal)
     rospy.loginfo("Goal sent, waiting...")
-    head_as.wait_for_result(rospy.Duration(10))
+    head_as.wait_for_result()
     #head_result = head_as.get_result()
     #rospy.loginfo("Done with result: " + traj_error_dict[head_result.error_code.val])
 

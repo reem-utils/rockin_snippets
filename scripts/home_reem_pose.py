@@ -48,7 +48,7 @@ def send_REEM_to_home_pose():
     rospy.logdebug("Sending goal...")
     moveit_ac.send_goal(moveit_goal)
     rospy.logdebug("Waiting for result...")
-    moveit_ac.wait_for_result(rospy.Duration(20.0))
+    moveit_ac.wait_for_result()
     moveit_result = moveit_ac.get_result()
     
     #rospy.loginfo("Got result:\n" + str(moveit_result)) # Uncomment if you want to see the full result message

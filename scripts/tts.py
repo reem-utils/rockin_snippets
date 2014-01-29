@@ -43,16 +43,16 @@ def createTTSGoal(text, lang_id='', wait_before_speaking=rospy.Duration(0.0)):
 if __name__ == '__main__':
     rospy.init_node('make_reem_say')
     if len(sys.argv) == 2:
-        goal = createTTSGoal(sys.argv[1])
+        goal = createTTSGoal(sys.argv[1], lang_id="it_IT")
     else:
         goal = createTTSGoal("Rockin camp is here!")
     tts_as = actionlib.SimpleActionClient('/sound', SoundAction)
     rospy.loginfo("Connecting to TTS AS...")
-    tts_as.wait_for_server(rospy.Duration(10))
+    tts_as.wait_for_server()
     rospy.loginfo("Connected, sending goal.")
     tts_as.send_goal(goal)
     rospy.loginfo("Goal sent, waiting...")
-    tts_as.wait_for_result(rospy.Duration(10))
+    tts_as.wait_for_result()
 
 
     

@@ -47,6 +47,7 @@ class TTS_ASR():
     def callback_asr(self, data):
         """Callback for the topic subscriber.
            Prints the current received data on the topic."""
+        self.usersaid = data
         goal = self.createTTSGoal("Did you say " + str(data.text) + "?")
         self.tts_as.send_goal(goal)
         rospy.loginfo("Goal sent, waiting...")

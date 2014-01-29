@@ -62,13 +62,16 @@ if __name__=='__main__':
     rospy.loginfo("Connected.")
     
     rospy.loginfo("Creating navigation goal...")
-    nav_goal = create_nav_goal(4.72333594438, -0.377168390489, 45) # 3.925197124481201, -3.026911973953247, 0.6259599924087524 livingroom
+    nav_goal = create_nav_goal(0.5, 0.0, 0.0)#4.72333594438, -0.377168390489, 45) # 3.925197124481201, -3.026911973953247, 0.6259599924087524 livingroom
     rospy.loginfo("Sending goal to x=2.0 y=2.0 yaw=90...")
     nav_as.send_goal(nav_goal)
     rospy.loginfo("Waiting for result...")
     nav_as.wait_for_result()
     nav_res = nav_as.get_result()
+    nav_state = nav_as.get_state()
     rospy.loginfo("Done!")
+    print "Result: ", str(nav_res) # always empty, be careful
+    print "Nav state: ", str(nav_state) # use this, 3 is SUCCESS, 4 is ABORTED (couldnt get there), 5 REJECTED (the goal is not attainable)
 
     
     
