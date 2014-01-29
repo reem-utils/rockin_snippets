@@ -1,0 +1,17 @@
+<!-- launch grasping related stuff -->
+<launch>
+  	<!--  -->
+  	<include file="$(find reem_tabletop_grasping)/launch/tabletop_grasping.launch" />
+
+  	<!-- -->
+ 	<node pkg="rockin_snippets" type="depth_throtle_server.py" name="depth_throtle" output="screen" />
+
+ 	<!-- my_computer -->
+ 	<node pkg="object_recognition_core" name="detection" type="detection"
+ 		args="-c $(find reem_object_recognition)/config/tabletop/detection.clusters.ros.ork.reem.throtled" 
+ 		output="screen" />
+
+ 	 <!-- robot -->
+ 	<!-- <node pkg="object_recognition_core" type="detection" name="detection_clusters" args="-c /mnt_flash/grasping_ws/src/reem_object_recognition/config/tabletop/detection.clusters.ros.ork.reem.throtled" output="screen" /> -->
+
+</launch>
